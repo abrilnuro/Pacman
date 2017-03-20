@@ -26,6 +26,7 @@ public class PacmanGridAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Nodo> nodes;
     private ImageView imageItemPacman;
+    private TextView textItemNodo;
     private int heightScreen;
 
     @Override
@@ -55,6 +56,8 @@ public class PacmanGridAdapter extends BaseAdapter {
 
         //referenciar elementos
         imageItemPacman = (ImageView) view.findViewById(R.id.image_item_pacman);
+        textItemNodo = (TextView) view.findViewById(R.id.text_item_nodo);
+        textItemNodo.setText(String.valueOf(nodes.get(i).getNumero()));
 
         return view;
     }

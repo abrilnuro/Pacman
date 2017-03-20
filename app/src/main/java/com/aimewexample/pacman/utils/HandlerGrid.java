@@ -42,9 +42,15 @@ public class HandlerGrid {
         @Override
         public void run() {
             rowView = gridView.getChildAt(nodes.get(position).getNumero());
-            ImageView image = (ImageView) rowView.findViewById(R.id.image_item_pacman);
-            image.setVisibility(View.VISIBLE);
-            image.animate().alpha(0f).setDuration(800);
+            final ImageView image = (ImageView) rowView.findViewById(R.id.image_item_pacman);
+
+            image.animate().alpha(1.0f);
+            image.postDelayed(new Runnable() {
+                public void run() {
+                    image.animate().alpha(0f);
+                }
+            }, 600);
+
             if(started) {
                 position = position + 1;
                 start();
