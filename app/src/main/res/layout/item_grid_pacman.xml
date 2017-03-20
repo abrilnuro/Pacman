@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/image_item_pacman"
-        android:layout_width="wrap_content"
-        android:layout_height="69dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:padding="5dp"
-        android:visibility="gone"
-        android:src="@drawable/icon_pacman" />
+        android:src="@drawable/icon_pacman"
+        android:visibility="gone" />
 </LinearLayout>

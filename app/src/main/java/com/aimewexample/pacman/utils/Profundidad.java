@@ -109,7 +109,7 @@ public class Profundidad {
 
     public static void busquedaProfundidad()
     {
-         int meta = 51;
+         int meta = 50;
         Log.i("BUSCAR:", String.valueOf(meta));
         coreProfundiad(meta,profundidad[0]);
     }
@@ -119,7 +119,7 @@ public class Profundidad {
         boolean band = false;
         if(nodoActual == null)
         {
-            System.out.println("NULL");
+            //System.out.println("NULL");
             return;
         }
         if(bandFin==false)
@@ -145,6 +145,7 @@ public class Profundidad {
                 if(bandFin==false)
                 {
                     Log.d("pacman",""+nodoActual.getNumero());
+                    recorridoFinal.add(nodoActual);
                 }
             }
         }
@@ -178,10 +179,16 @@ public class Profundidad {
 
     public static List<Nodo> mostrarRecorridoFinal()
     {
+        List<Nodo> recorrido= new ArrayList<Nodo>();
         for(Nodo x : recorridoFinal)
         {
-            Log.d("pacman","Recorrido final: "+x.getNumero());
+            //x.setNumero(x.getNumero()-1);
+            //Log.d("pacman","Recorrido final: "+x.getNumero());
+            Nodo nodo = new Nodo(x.getNumero(),x.getIzquierda(),x.getDerecha());
+            nodo.setNumero(nodo.getNumero()-1);
+            recorrido.add(nodo);
+
         }
-        return recorridoFinal;
+        return recorrido;
     }
 }

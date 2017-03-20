@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_dialog_play_again:
                 dialog.dismiss();
                 ArrayList<Nodo> recorrido = new ArrayList<>();
-                recorrido.add(new Nodo(1));
-                recorrido.add(new Nodo(20));
-                recorrido.add(new Nodo(46));
-                recorrido.add(new Nodo(38));
+                recorrido.add(new Nodo(0));
+                recorrido.add(new Nodo(40));
+                recorrido.add(new Nodo(48));
+                recorrido.add(new Nodo(56));
                 handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorridoFinalPacman);
                 handlerGrid.start();
                 break;
