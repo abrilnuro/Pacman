@@ -10,6 +10,11 @@ public class Nodo {
     private Nodo Izquierda;
     private Nodo Derecha;
 
+
+    public Nodo(int numero) {
+        this.numero = numero;
+    }
+
     public Nodo(int numero, Nodo izquierda, Nodo derecha) {
         super();
         this.numero = numero;

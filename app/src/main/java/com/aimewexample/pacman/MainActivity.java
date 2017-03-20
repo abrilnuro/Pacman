@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.aimewexample.pacman.adapters.PacmanGridAdapter;
+import com.aimewexample.pacman.models.Nodo;
 import com.aimewexample.pacman.models.Nodos;
 import com.aimewexample.pacman.utils.HandlerGrid;
 import com.aimewexample.pacman.utils.MetodoEnProfundidad;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ArrayList<Nodos> nodes;
+    private ArrayList<Nodo> nodes;
     private GridView gridView;
     private PacmanGridAdapter adapter;
     private HandlerGrid handlerGrid;
@@ -69,7 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.button_dialog_play_again:
                 dialog.dismiss();
-                handlerGrid = new HandlerGrid(this, gridView, nodes);
+                ArrayList<Nodo> recorrido = new ArrayList<>();
+                recorrido.add(new Nodo(1));
+                recorrido.add(new Nodo(20));
+                recorrido.add(new Nodo(46));
+                recorrido.add(new Nodo(38));
+                handlerGrid = new HandlerGrid(this, gridView, recorrido);
                 handlerGrid.start();
                 break;
         }
@@ -111,9 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void initArray(){
         nodes = new ArrayList();
         for (int i = 0; i <64 ; i++) {
-            nodes.add(new Nodos(i));
+            nodes.add(new Nodo(i));
         }
     }
-
-
 }

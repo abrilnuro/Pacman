@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.aimewexample.pacman.R;
+import com.aimewexample.pacman.models.Nodo;
 import com.aimewexample.pacman.models.Nodos;
 
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class HandlerGrid {
     private int position = 0;
 
     private GridView gridView;
-    private ArrayList<Nodos> nodes;
+    private ArrayList<Nodo> nodes;
     private Context context;
     private View rowView;
 
-    public HandlerGrid(Context context, GridView gridView, ArrayList<Nodos> nodes) {
+    public HandlerGrid(Context context, GridView gridView, ArrayList<Nodo> nodes) {
         this.context = context;
         this.gridView = gridView;
         this.nodes = nodes;

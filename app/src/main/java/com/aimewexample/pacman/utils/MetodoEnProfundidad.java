@@ -87,8 +87,7 @@ public class MetodoEnProfundidad {
     // Recursive DFS
     public  void dfs(int adjacency_matrix[][], Node node) {
 
-        //Log.i("DATOS: ", String.valueOf(node.data));
-        //System.out.print(node.data + "t");
+        Log.i("DATOS: ", String.valueOf(node.data));
         recorrido.add(String.valueOf(node.data));
         ArrayList neighbours=findNeighbours(adjacency_matrix,node);
 
@@ -96,13 +95,12 @@ public class MetodoEnProfundidad {
             Node n= (Node) neighbours.get(i);
             if(n!=null && !n.visited)
             {
+                Log.i("NODE: ", String.valueOf(n.data));
                 dfs(adjacency_matrix,n);
                 n.visited=true;
-
             }
         }//for
-        //Log.i("DATOS: ", recorrido.toString());
-        //Log.i("DATOS: ", nodes.toString());
+        Log.i("RECORRIDO: ", recorrido.toString());
     }
 
     // Iterative DFS using stack

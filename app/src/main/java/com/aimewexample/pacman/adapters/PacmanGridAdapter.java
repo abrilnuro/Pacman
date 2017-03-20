@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aimewexample.pacman.R;
+import com.aimewexample.pacman.models.Nodo;
 import com.aimewexample.pacman.models.Nodos;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class PacmanGridAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Nodos> nodes;
+    private ArrayList<Nodo> nodes;
     private ImageView imageItemPacman;
     private int heightScreen;
 
@@ -58,7 +59,7 @@ public class PacmanGridAdapter extends BaseAdapter {
         return view;
     }
 
-    public PacmanGridAdapter(Context context, ArrayList<Nodos> nodes, int heightScreen) {
+    public PacmanGridAdapter(Context context, ArrayList<Nodo> nodes, int heightScreen) {
         this.context = context;
         this.nodes = nodes;
         this.heightScreen = heightScreen;
