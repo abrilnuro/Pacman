@@ -27,6 +27,7 @@ import com.aimewexample.pacman.utils.MetodoEnProfundidad;
 import com.aimewexample.pacman.utils.Profundidad;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GridView gridView;
     private PacmanGridAdapter adapter;
     private HandlerGrid handlerGrid;
+    public List<Nodo> recorridoFinalPacman = new ArrayList<Nodo>();
 
     private Dialog dialog;
     private Button buttonDialogPlayAgain;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         hideElements();
         setContentView(R.layout.activity_main);
+        Profundidad.crearArbolProfundidad();
+        recorridoFinalPacman = Profundidad.mostrarRecorridoFinal();
 
         //inicialzar lista
         initArray();
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 recorrido.add(new Nodo(20));
                 recorrido.add(new Nodo(46));
                 recorrido.add(new Nodo(38));
-                handlerGrid = new HandlerGrid(this, gridView, recorrido);
+                handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorridoFinalPacman);
                 handlerGrid.start();
                 break;
         }

@@ -19,31 +19,35 @@ public class Profundidad {
     public static Nodo[] NodoVisitados;
     public static int contadorVisitados=0;
     public static List<Nodo> recorridoFinal = new ArrayList<Nodo>();
+    public static boolean bandFin = false;
 
     public static void crearArbolProfundidad()
     {
-        Log.i("PROFUNDIDAD:", "Creando Arbol");
-        contadorVisitados=0;
-        tamaño = 8;
-        numeroNodos = tamaño*tamaño;
-        profundidad = new Nodo[numeroNodos];
-        NodoVisitados = new Nodo[numeroNodos+1];
-        CrearNodos();
-        for(int i=0;i<profundidad.length;i++)
+        if(bandFin == false)
         {
-            int izq = 0,der = 0;
-            if(!lateralesIzquierda(i+1))
+            Log.i("PROFUNDIDAD:", "Creando Arbol");
+            contadorVisitados=0;
+            tamaño = 8;
+            numeroNodos = tamaño*tamaño;
+            profundidad = new Nodo[numeroNodos];
+            NodoVisitados = new Nodo[numeroNodos+1];
+            CrearNodos();
+            for(int i=0;i<profundidad.length;i++)
             {
-                profundidad[i].setIzquierda(buscaNodo((i+1)+tamaño));
-                izq = (i+1)+tamaño;
+                int izq = 0,der = 0;
+                if(!lateralesIzquierda(i+1))
+                {
+                    profundidad[i].setIzquierda(buscaNodo((i+1)+tamaño));
+                    izq = (i+1)+tamaño;
+                }
+                if(!lateralesDerecho(i+1))
+                {
+                    profundidad[i].setDerecha(buscaNodo((i+1)+1));
+                    der = (i+1)+1;
+                }
             }
-            if(!lateralesDerecho(i+1))
-            {
-                profundidad[i].setDerecha(buscaNodo((i+1)+1));
-                der = (i+1)+1;
-            }
+            busquedaProfundidad();
         }
-        busquedaProfundidad();
     }
 
     public static Nodo buscaNodo(int num)
@@ -106,26 +110,31 @@ public class Profundidad {
     public static void busquedaProfundidad()
     {
          int meta = 51;
-        coreProfundiad(meta,profundidad[0]);
         Log.i("BUSCAR:", String.valueOf(meta));
+        coreProfundiad(meta,profundidad[0]);
     }
 
     public static void coreProfundiad(int meta,Nodo nodoActual)
     {
-        //Log.i("CORE PROFUNDIDAD:", "Entró");
         boolean band = false;
         if(nodoActual == null)
         {
+            System.out.println("NULL");
             return;
         }
-        recorridoFinal.add(nodoActual);
+        if(bandFin==false)
+        {
+            Log.d("pacman",""+nodoActual.getNumero());
+            recorridoFinal.add(nodoActual);
+        }
         if(nodoActual.getIzquierda()!=null && nodoActual.getDerecha() == null){
             band= false;
         }
         if(nodoActual.getNumero() == meta)
         {
+            System.out.println("ENCONTRO!!");
+            bandFin = true;
             band = true;
-            Log.i("ARRAY RECORRIDO FINAL :", recorridoFinal.toString());
             crearArbolProfundidad();
         }
         if(nodoActual.getIzquierda() != null && nodoActual.getDerecha()!= null)
@@ -133,14 +142,21 @@ public class Profundidad {
             if(!buscaVisitadocore(nodoActual.getIzquierda()))
             {
                 coreProfundiad(meta,nodoActual.getIzquierda());
+                if(bandFin==false)
+                {
+                    Log.d("pacman",""+nodoActual.getNumero());
+                }
             }
         }
         NodoVisitados[contadorVisitados] = nodoActual;
         contadorVisitados++;
 
         coreProfundiad(meta,nodoActual.getDerecha());
-        recorridoFinal.add(nodoActual);
-        Log.i("RECORRIDO FINAL:", String.valueOf(nodoActual.getNumero()));
+        if(bandFin==false)
+        {
+            Log.d("pacman",""+nodoActual.getNumero());
+            recorridoFinal.add(nodoActual);
+        }
     }
 
     public static boolean buscaVisitadocore(Nodo x)
@@ -158,5 +174,14 @@ public class Profundidad {
             }
         }
         return band;
+    }
+
+    public static List<Nodo> mostrarRecorridoFinal()
+    {
+        for(Nodo x : recorridoFinal)
+        {
+            Log.d("pacman","Recorrido final: "+x.getNumero());
+        }
+        return recorridoFinal;
     }
 }
