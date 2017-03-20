@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void initArray(){
         nodes = new ArrayList();
-        for (int i = 0; i <64 ; i++) {
+        for (int i = 1; i <65 ; i++) {
             nodes.add(new Nodo(i));
         }
     }
