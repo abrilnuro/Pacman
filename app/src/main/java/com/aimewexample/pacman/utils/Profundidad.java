@@ -20,6 +20,8 @@ public class Profundidad {
     public static int contadorVisitados=0;
     public static List<Nodo> recorridoFinal = new ArrayList<Nodo>();
     public static boolean bandFin = false;
+    public static boolean encontroAestrella;
+    public static List<Nodo> recorridoFinalAestrella = new ArrayList<Nodo>();
 
     public static void crearArbolProfundidad()
     {
@@ -27,7 +29,7 @@ public class Profundidad {
         {
             Log.i("PROFUNDIDAD:", "Creando Arbol");
             contadorVisitados=0;
-            tamaño = 8;
+            tamaño = 8; //TAMAÑO DEL ARBOL
             numeroNodos = tamaño*tamaño;
             profundidad = new Nodo[numeroNodos];
             NodoVisitados = new Nodo[numeroNodos+1];
@@ -47,6 +49,7 @@ public class Profundidad {
                 }
             }
             busquedaProfundidad();
+            busquedaAestrella();
         }
     }
 
@@ -112,6 +115,12 @@ public class Profundidad {
          int meta = 50;
         Log.i("BUSCAR:", String.valueOf(meta));
         coreProfundiad(meta,profundidad[0]);
+    }
+    public static void busquedaAestrella()
+    {
+        int meta = 38;
+        Log.i("BUSCAR:", String.valueOf(meta));
+        metodoAestrella(meta,profundidad[0]);
     }
 
     public static void coreProfundiad(int meta,Nodo nodoActual)
@@ -184,6 +193,59 @@ public class Profundidad {
         {
             //x.setNumero(x.getNumero()-1);
             //Log.d("pacman","Recorrido final: "+x.getNumero());
+            Nodo nodo = new Nodo(x.getNumero(),x.getIzquierda(),x.getDerecha());
+            nodo.setNumero(nodo.getNumero()-1);
+            recorrido.add(nodo);
+
+        }
+        return recorrido;
+    }
+
+    //----------------------------------------------------------------------------
+    public static void metodoAestrella(int meta,Nodo nodoActual)
+    {
+        if(encontroAestrella == false)
+        {
+            Log.d("pacman: ",""+nodoActual.getNumero());
+            recorridoFinalAestrella.add(nodoActual);
+            if(nodoActual.getNumero() == meta)
+            {
+                System.out.println("ENCONTRO!!");
+                encontroAestrella = true;
+                return;
+            }
+            else
+            {
+                boolean irPorIzquierda = false;
+                if(nodoActual.getDerecha().getNumero() <= meta)
+                {
+                    if(nodoActual.getIzquierda() == null)
+                    {
+
+                    }
+                    else
+                    if(nodoActual.getIzquierda().getNumero() <= meta)
+                    {
+                        irPorIzquierda = true;
+                    }
+                }
+                if(irPorIzquierda == true)
+                {
+                    metodoAestrella(meta,nodoActual.getIzquierda());
+                }
+                else
+                {
+                    metodoAestrella(meta,nodoActual.getDerecha());
+                }
+            }
+        }
+    }
+
+    public static List<Nodo> mostrarRecorridoFinalAestrella()
+    {
+        List<Nodo> recorrido= new ArrayList<Nodo>();
+        for(Nodo x : recorridoFinalAestrella)
+        {
             Nodo nodo = new Nodo(x.getNumero(),x.getIzquierda(),x.getDerecha());
             nodo.setNumero(nodo.getNumero()-1);
             recorrido.add(nodo);

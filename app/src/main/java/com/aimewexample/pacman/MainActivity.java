@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         hideElements();
         setContentView(R.layout.activity_main);
-        Profundidad.crearArbolProfundidad();
-        recorridoFinalPacman = Profundidad.mostrarRecorridoFinal();
+        Profundidad.crearArbolProfundidad(); //CREANDO ARBOL DE 64 NODOS (cambiar en este metodo)
+
+        //recorridoFinalPacman = Profundidad.mostrarRecorridoFinal();  //Metodo para profundiad
+        recorridoFinalPacman = Profundidad.mostrarRecorridoFinalAestrella();  //Metodo para A*
 
         //inicialzar lista
         initArray();
