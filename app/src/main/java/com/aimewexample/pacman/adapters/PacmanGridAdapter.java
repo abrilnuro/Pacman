@@ -52,7 +52,7 @@ public class PacmanGridAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.item_grid_pacman, null);
 
         //ajustar los view al tamaño de la pantalla
-        view.setMinimumHeight(heightScreen/10);
+        view.setMinimumHeight(heightScreen/5);
 
         //referenciar elementos
         imageItemPacman = (ImageView) view.findViewById(R.id.image_item_pacman);

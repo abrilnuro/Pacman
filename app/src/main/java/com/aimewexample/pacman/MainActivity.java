@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.aimewexample.pacman.adapters.PacmanGridAdapter;
 import com.aimewexample.pacman.models.Nodo;
 import com.aimewexample.pacman.models.Nodos;
+import com.aimewexample.pacman.utils.Aasterisco;
 import com.aimewexample.pacman.utils.HandlerGrid;
 import com.aimewexample.pacman.utils.MetodoEnProfundidad;
 import com.aimewexample.pacman.utils.Profundidad;
@@ -76,12 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.button_dialog_play_again:
                 dialog.dismiss();
-                ArrayList<Nodo> recorrido = new ArrayList<>();
-                recorrido.add(new Nodo(0));
-                recorrido.add(new Nodo(40));
-                recorrido.add(new Nodo(48));
-                recorrido.add(new Nodo(56));
-                handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorridoFinalPacman);
+
+                Aasterisco busqueda = new Aasterisco();
+                List<Nodo>  recorrido = busqueda.getRecorrido(1, 3);
+
+                handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorrido/*(ArrayList<Nodo>) recorridoFinalPacman*/);
                 handlerGrid.start();
                 break;
         }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void initArray(){
         nodes = new ArrayList();
-        for (int i = 1; i <65 ; i++) {
+        for (int i = 0; i <25 ; i++) {
             nodes.add(new Nodo(i));
         }
     }

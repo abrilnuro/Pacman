@@ -1,5 +1,7 @@
 package com.aimewexample.pacman.models;
 
+import java.util.List;
+
 /**
  * Created by aimew on 16/03/2017.
  */
@@ -9,7 +11,10 @@ public class Nodo {
     private int numero;
     private Nodo Izquierda;
     private Nodo Derecha;
+    private List<Nodo>nodosAdyacentes;
 
+    public Nodo() {
+    }
 
     public Nodo(int numero) {
         this.numero = numero;
@@ -44,5 +49,13 @@ public class Nodo {
 
     public void setDerecha(Nodo derecha) {
         Derecha = derecha;
+    }
+
+    public List<Nodo> getNodosAdyacentes() {
+        return nodosAdyacentes;
+    }
+
+    public void setNodosAdyacentes(List<Nodo> nodosAdyacentes) {
+        this.nodosAdyacentes = nodosAdyacentes;
     }
 }
