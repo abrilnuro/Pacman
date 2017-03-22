@@ -2,16 +2,20 @@ package com.aimewexample.pacman.utils;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
+import android.view.Window;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.aimewexample.pacman.MainActivity;
 import com.aimewexample.pacman.R;
 import com.aimewexample.pacman.models.Nodo;
-import com.aimewexample.pacman.models.Nodos;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by aimew on 19/03/2017.
@@ -57,8 +61,6 @@ public class HandlerGrid {
             }
             if (position == nodes.size()){
                 stop();
-                Toast.makeText(context, "FINISH", Toast.LENGTH_SHORT).show();
-
             }
         }
     };
@@ -71,5 +73,15 @@ public class HandlerGrid {
     public void stop() {
         started = false;
         handler.removeCallbacks(runnable);
+        showDialog();
+    }
+
+    public void showDialog(){
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((MainActivity)context).dialogPlayAgain();
+            }
+        }, 1000);
     }
 }

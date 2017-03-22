@@ -1,30 +1,21 @@
 package com.aimewexample.pacman;
 
 import android.app.Dialog;
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Build;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.aimewexample.pacman.adapters.PacmanGridAdapter;
 import com.aimewexample.pacman.models.Nodo;
-import com.aimewexample.pacman.models.Nodos;
-import com.aimewexample.pacman.utils.Aasterisco;
 import com.aimewexample.pacman.utils.HandlerGrid;
-import com.aimewexample.pacman.utils.MetodoEnProfundidad;
 import com.aimewexample.pacman.utils.Profundidad;
 
 import java.util.ArrayList;
@@ -39,24 +30,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HandlerGrid handlerGrid;
     public List<Nodo> recorridoFinalPacman = new ArrayList<Nodo>();
 
-    private Dialog dialog;
+    private Dialog dialogStartGame;
+    private Dialog dialogPlayAgain;
     private Button buttonDialogPlayAgain;
+    private Button buttonDialogStartGame;
+    private Button buttonDialogBack;
+    int metodo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideElements();
         setContentView(R.layout.activity_main);
-        Profundidad.crearArbolProfundidad(); //CREANDO ARBOL DE 64 NODOS (cambiar en este metodo)
 
-        //recorridoFinalPacman = Profundidad.mostrarRecorridoFinal();  //Metodo para profundiad
-        recorridoFinalPacman = Profundidad.mostrarRecorridoFinalAestrella();  //Metodo para A*
+        //cachar el intent y ejecutar el metodo seleccionado
+        Profundidad.crearArbolProfundidad(); //CREANDO ARBOL DE 64 NODOS (cambiar en este metodo)
+        Intent intent = getIntent();
+        metodo = intent.getIntExtra("metodo", 0);
+
+        //mostrar cuadro de opciones
+        dialogStartGame();
 
         //inicialzar lista
         initArray();
-
-        //mostrar cuadro de opciones
-        showOptions();
 
         //configurar gridView
         gridView = (GridView)findViewById(R.id.grid_view);
@@ -75,15 +71,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.button_dialog_play_again:
-                dialog.dismiss();
-
-                Aasterisco busqueda = new Aasterisco();
-                List<Nodo>  recorrido = busqueda.getRecorrido(1, 3);
-
-                handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorrido/*(ArrayList<Nodo>) recorridoFinalPacman*/);
-                handlerGrid.start();
+            case R.id.button_dialog_start_game:
+                dialogStartGame.dismiss();
+                ejecutarMetodo();
                 break;
+            case R.id.button_dialog_play_again:
+                dialogPlayAgain.dismiss();
+                ejecutarMetodo();
+                break;
+            case R.id.button_dialog_back:
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    public void ejecutarMetodo(){
+        if(metodo == 1){
+            recorridoFinalPacman = Profundidad.mostrarRecorridoFinal();  //Metodo para profundiad
+            handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorridoFinalPacman);
+            handlerGrid.start();
+        }else {
+            recorridoFinalPacman = Profundidad.mostrarRecorridoFinalAestrella();  //Metodo para A*
+            handlerGrid = new HandlerGrid(this, gridView, (ArrayList<Nodo>) recorridoFinalPacman);
+            handlerGrid.start();
         }
     }
 
@@ -96,15 +107,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return height;
     }
 
-    public void showOptions(){
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_options);
+    public void dialogPlayAgain(){
+        dialogPlayAgain = new Dialog(this);
+        dialogPlayAgain.setContentView(R.layout.dialog_play_again);
+        dialogPlayAgain.setTitle("GAME OVER");
+        dialogPlayAgain.setCanceledOnTouchOutside(false);
 
         //referenciar elementos
-        buttonDialogPlayAgain = (Button)dialog.findViewById(R.id.button_dialog_play_again);
+        buttonDialogPlayAgain = (Button)dialogPlayAgain.findViewById(R.id.button_dialog_play_again);
+        buttonDialogBack = (Button)dialogPlayAgain.findViewById(R.id.button_dialog_back);
+        buttonDialogBack.setOnClickListener(this);
         buttonDialogPlayAgain.setOnClickListener(this);
 
-        dialog.show();
+        dialogPlayAgain.show();
+    }
+
+    public void dialogStartGame(){
+        dialogStartGame = new Dialog(this);
+        dialogStartGame.setContentView(R.layout.dialog_start_game);
+        dialogStartGame.setTitle("Presiona para comenzar");
+        dialogStartGame.setCanceledOnTouchOutside(false);
+
+        //referenciar elementos
+        buttonDialogStartGame = (Button)dialogStartGame.findViewById(R.id.button_dialog_start_game);
+        buttonDialogStartGame.setOnClickListener(this);
+
+        dialogStartGame.show();
     }
 
     //metodo que oculta la statusBar y navigationBar
@@ -120,9 +148,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     public void initArray(){
         nodes = new ArrayList();
-        for (int i = 0; i <25 ; i++) {
+        for (int i = 1; i <65 ; i++) {
             nodes.add(new Nodo(i));
         }
     }

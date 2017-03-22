@@ -1,19 +1,16 @@
 package com.aimewexample.pacman.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aimewexample.pacman.MainActivity;
 import com.aimewexample.pacman.R;
 import com.aimewexample.pacman.models.Nodo;
-import com.aimewexample.pacman.models.Nodos;
 
 import java.util.ArrayList;
 
@@ -52,12 +49,19 @@ public class PacmanGridAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.item_grid_pacman, null);
 
         //ajustar los view al tamaño de la pantalla
-        view.setMinimumHeight(heightScreen/5);
+        view.setMinimumHeight(heightScreen/8);
 
         //referenciar elementos
         imageItemPacman = (ImageView) view.findViewById(R.id.image_item_pacman);
         textItemNodo = (TextView) view.findViewById(R.id.text_item_nodo);
         textItemNodo.setText(String.valueOf(nodes.get(i).getNumero()));
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)context).dialogPlayAgain();
+            }
+        });
 
         return view;
     }
