@@ -1,6 +1,7 @@
 package com.aimewexample.pacman.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,11 @@ public class PacmanGridAdapter extends BaseAdapter {
         //inflar el view
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.item_grid_pacman, null);
+
+        //asignar un color al view meta y al view destino
+        if(i==0 || i ==39){
+            view.setBackgroundColor(Color.parseColor("#ff33b5e5"));
+        }
 
         //ajustar los view al tamaño de la pantalla
         view.setMinimumHeight(heightScreen/8);

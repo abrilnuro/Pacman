@@ -112,13 +112,13 @@ public class Profundidad {
 
     public static void busquedaProfundidad()
     {
-         int meta = 50;
+         int meta = 40;
         Log.i("BUSCAR:", String.valueOf(meta));
         coreProfundiad(meta,profundidad[0]);
     }
     public static void busquedaAestrella()
     {
-        int meta = 38;
+        int meta = 40;
         Log.i("BUSCAR:", String.valueOf(meta));
         metodoAestrella(meta,profundidad[0]);
     }
